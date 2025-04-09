@@ -204,6 +204,7 @@ function logger(func, logFunc) {
  * Return the function with partial applied arguments
  *
  * @param {Function} fn
+ * @param args1
  * @return {Function}
  *
  * @example
@@ -213,8 +214,11 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn, ...args1) {
+  return (...args2) => {
+    const allArgs = [...args1, ...args2];
+    return fn(...allArgs);
+  };
 }
 
 /**
@@ -234,8 +238,13 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
+function getIdGeneratorFunction(startFrom) {
+  let currentId = startFrom;
+  return () => {
+    const idToReturn = currentId;
+    currentId += 1;
+    return idToReturn;
+  };
 }
 
 module.exports = {
